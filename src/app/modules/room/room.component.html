@@ -1,0 +1,94 @@
+<mat-drawer-container class="example-container h-full">
+
+  <mat-drawer #sideNav mode="side" [opened]="isShowChat" position="end">
+    <div class="flex flex-col h-full">
+      <div class="border-b-[1px] border-solid">
+          <mat-icon style="display: flex;" class="p-5 items-center justify-center text-4xl
+          hover:cursor-pointer hover:bg-slate-400" (click)="isShowChat = !isShowChat">keyboard_arrow_right</mat-icon>
+      </div>
+      <div class="flex-1 w-[320px] px-2">
+
+        <a  *ngFor="let message of messageInGroup">
+            <div class="flex w-full justify-between">
+                <h5 class="mb-1">{{message.senderDisplayName}}</h5>
+                <small>{{message.messageSent | timeago}}</small>
+            </div>
+            <p class="mb-1">{{message.content}}</p>
+            <!-- <small>{{message.messageSent | date:'d/M/yyyy, h:mm a'}}</small> -->
+        </a>
+      </div>
+
+      <div class=" border border-solid border-blue-500 sticky bottom-0 m-4 rounded-tr-md rounded-br-md">
+        <form [formGroup]="chatForm" autocomplete="off" (ngSubmit)="sendMessage()">
+            <div class="flex">
+                <textarea class="w-[95%] p-2" type="text" formControlName='content' name="content" rows="3" placeholder="type message here...">
+                  </textarea>
+                <div class="input-group-append text-white ">
+                    <button [disabled]="!chatForm.valid" class="bg-blue-600 h-full rounded-tr-md rounded-br-md px-2"
+                        type="submit">
+                        <mat-icon>send</mat-icon>
+                      </button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <!-- <button (click)="sideNav.toggle()" mat-button>Toggle SideNav</button> -->
+    <div class="flex justify-center p-4">
+        <!-- <a class="nav-link" (click)="StartRecord()" *ngIf="isRecorded">
+            <i class="fas" [ngClass]="isStopRecord ? ['fa-stop']:['fa-record-vinyl red'] "></i>
+            {{textStopRecord}}
+        </a> -->
+        <button class=" p-2" (click)="enableOrDisableAudio()">
+          <mat-icon class=" d-flex bg-blue-700 p-5 rounded-md text-white  items-center justify-center" *ngIf="enableAudio">mic</mat-icon>
+          <mat-icon class=" d-flex bg-slate-300 p-5 rounded-md text-white items-center justify-center" *ngIf="!enableAudio">mic_off</mat-icon>
+        </button>
+        <button class="p-2" (click)="enableOrDisableVideo()">
+          <mat-icon class="d-flex bg-blue-700 p-5 rounded-md text-white  items-center justify-center" *ngIf="enableVideo">videocam</mat-icon>
+          <mat-icon class="d-flex bg-slate-300 p-5 rounded-md text-white items-center justify-center" *ngIf="!enableVideo">videocam_off</mat-icon>
+        </button>
+        <button class="p-2" (click)="closeCall()">
+          <mat-icon class="d-flex bg-red-700 p-5 rounded-md text-white  items-center justify-center">call</mat-icon>
+        </button>
+        <button class="border border-solid p-2 bg-blue-700 rounded-md text-white">
+            <button type="button" [disabled]="!enableShareScreen" class="btn btn-primary btn-sm" (click)="shareScreen()">Share screen</button>
+        </button>
+      </div>
+      <mat-icon style="display: flex;" *ngIf="!isShowChat" (click)="isShowChat = !isShowChat" class="fixed top-0 right-0 p-5 items-center justify-center text-4xl
+      hover:cursor-pointer hover:bg-slate-400">keyboard_arrow_left</mat-icon>
+
+    <div class="row mt-1">
+      <div class="col-md-7">
+          <div [ngSwitch]="statusScreen">
+              <div style="position: relative;" id="share-screen" *ngSwitchCase="'SHARESCREEN'">
+                  <video [srcObject]="shareScreenStream" (loadedmetadata)="onLoadedMetadata($event)" muted></video>
+                  <span class="label badge bg-danger" *ngIf="userIsSharing">{{userIsSharing}}</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-5">
+          <div style="height: 100%;">
+                <div class="grid grid-cols-2 gap-4">
+                  <div *ngFor="let user of tempvideos">
+                      <app-video-box-user [userVideo]="user"></app-video-box-user>
+                  </div>
+                  <div class="col-12" *ngIf="videos.length > maxUserDisplay">
+                      <div class="text-center">
+                          <div class="box text-secondary" style="font-size: x-large;"> +{{videos.length - maxUserDisplay}}</div>
+                      </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="card text-white bg-dark mb-3" style="width: 100%;">
+                        <div class="card-body" style="padding: 0;">
+                            <video #videoPlayer width="100%" height="40%" controls></video>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,47 @@
+video {
+  background-color: black;
+  pointer-events: none;
+
+}
+
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+video::-webkit-media-controls-play-button {
+  display: none;
+}
+video::-webkit-media-controls-timeline {
+  display: none;
+}
+video::-webkit-media-controls-current-time-display{
+  display: none;
+}
+video::-webkit-media-controls-time-remaining-display {
+  display: none;
+}
+video::-webkit-media-controls-mute-button {
+  display: none;
+}
+video::-webkit-media-controls-toggle-closed-captions-button {
+  display: none;
+}
+video::-webkit-media-controls-volume-slider {
+  display: none;
+}
+#share-screen video{
+  background-color: black;
+  width: 100%;
+  height: 500px;
+  pointer-events: none;
+}
+
+.d-flex{
+  display: flex !important;
+}
+textarea {
+  resize: none;
+  outline: none;
+}
+textarea:focus{
+  border: 1px solid blue;
+}

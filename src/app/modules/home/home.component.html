@@ -1,0 +1,58 @@
+<app-header></app-header>
+<div style="height: calc(100% - 70px)" class="w-full p-6">
+  <button mat-raised-button (click)="openDialog()">Add</button>
+  <mat-grid-list cols="3" rowHeight="248px" gutterSize="2rem">
+    <mat-grid-tile
+      class="rounded-md bg-blue-200"
+      *ngFor="let item of listRoom"
+    >
+      <div class="w-full h-full flex flex-col p-2">
+        <div class="flex">
+          <div class="">
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="home"
+            ></mat-icon>
+          </div>
+          <div class="flex-1">
+            <div class="flex gap-2">
+              <span>English</span>
+              <span>Beginer</span>
+            </div>
+            <div>{{ item.roomName }}</div>
+          </div>
+          <div>
+            <mat-icon
+              aria-hidden="false"
+              aria-label="Example home icon"
+              fontIcon="settings"
+            ></mat-icon>
+          </div>
+        </div>
+        <div class="flex-1 w-full flex items-center">
+          <img class="w-[30%] rounded-[50%] p-2" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </div>
+        <div class="text-center">
+          <button
+            (click)="joinRoom(item.roomId)"
+            class="hover:opacity-80 active:bg-blue-800 bg-blue-500 p-2 text-white rounded-md"
+            mat-button
+          >
+            Join
+          </button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div class="fixed bottom-0 w-full">
+  <mat-paginator
+    [hidePageSize]="true"
+    (page)="handlePage($event)"
+    [pageSize]="pagination?.itemsPerPage"
+    [pageIndex]="pagination?.currentPage"
+    [length]="pagination?.totalItems"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>
