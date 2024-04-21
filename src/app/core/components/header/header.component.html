@@ -1,0 +1,11 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <div class="flex justify-between w-full">
+      <span class="ml-4 flex items-center">CM MEET</span>
+      <span class="cursor-pointer hover:bg-slate-200 p-2" [matMenuTriggerFor]="belowMenu" *ngIf="(_user.currentUser$ | async) as user">{{user?.fullName}}</span>
+    </div>
+  </mat-toolbar-row>
+  <mat-menu #belowMenu="matMenu" xPosition="before">
+    <button class="text-center text-xs" mat-menu-item (click)="logout()">Log Out</button>
+  </mat-menu>
+</mat-toolbar>

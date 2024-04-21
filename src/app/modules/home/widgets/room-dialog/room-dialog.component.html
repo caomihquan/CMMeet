@@ -1,0 +1,40 @@
+<div mat-dialog-content>
+  <h1>Create New Room</h1>
+  <div class="flex">
+    <mat-form-field class="flex-[2]">
+      <mat-label>Topic</mat-label>
+      <input matInput [(ngModel)]="data.RoomName">
+    </mat-form-field>
+    <mat-form-field class="flex-[1]">
+      <mat-label>Member</mat-label>
+      <mat-select [(ngModel)]="data.MaximumMember" name="food">
+        <mat-option *ngFor="let item of MemberData" [value]="item.SL">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="flex">
+    <mat-form-field>
+      <mat-label>Language</mat-label>
+      <mat-select [(ngModel)]="data.LanguageCode" name="food">
+        <mat-option *ngFor="let lang of ListLanguage" [value]="lang.languageCode">
+          {{lang.languageName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Level</mat-label>
+      <mat-select [(ngModel)]="data.LevelCode" name="food">
+        <mat-option *ngFor="let level of ListLevel" [value]="level.levelCode">
+          {{level.levelName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>
+<div class="w-full">
+  <button mat-button class="w-[50%] h-full p-3 bg-slate-300 text-white" (click)="onNoClick()">Cancel</button>
+  <button mat-button class="w-[50%] bg-blue-500 h-full p-3 text-white" (click)="ClickOK()" cdkFocusInitial>Ok</button>
+</div>
